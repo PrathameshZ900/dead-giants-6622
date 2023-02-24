@@ -25,3 +25,9 @@ singUp.addEventListener("click",function(){
 // function gotoLogin(){
 //     location.href="./login.html"
 // }
+
+let left2=document.getElementById("left2");
+
+left2.addEventListener("click",function(){
+    location.href="./home.html"
+})

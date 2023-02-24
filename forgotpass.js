@@ -14,3 +14,8 @@ btn.addEventListener("click",function(){
         }
     });
 })
+let left2=document.getElementById("left2");
+
+left2.addEventListener("click",function(){
+    location.href="./home.html"
+})
