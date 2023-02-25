@@ -9,65 +9,7 @@ let maindiv = document.getElementById("app");
 let URL = "https://63f78042e40e087c95906c44.mockapi.io/mens";
 
 
-// fetch(URL)
-// .then(function(res){
-//   return res.json();
-// })
-
-// .then(function (data){
-//   console.log(data);
-//   display(data);
-// })
-// .catch(function(err){
-//   console.log(err);
-//  })
-
-// function display(data){
-  
-//     data.forEach(element => {
-    
-//         let div = document.createElement("div");
-
-//         let img = document.createElement("img");
-//         img.setAttribute("src",element.img);
-
-//         let type = document.createElement("p");
-//         type.innerText="Mens Tshirt black";
-
-//         let style = document.createElement("h5")
-//         style.innerText = element.style;
-
-//         let price = document.createElement("h4");
-//         price.innerText = `₹${element.price}`;
-
-//         let addcart = document.createElement("button");
-//         addcart.innerText="AddCart"
-
-       
-//         div.append(img,type,style,price,addcart);
-//         maindiv.append(div);
-//     });
-
-
-// }
-
-// let filter = document.getElementById("filter");
-
-// filter.addEventListener("change", () => {
-//     if (filter.value === "") {
-//       display(data);
-//     } else {
-//       let filtered = data.filter((element) => {
-//         return "" + element.completed === selectFilter.value;
-//       });
-//       display(filtered);
-//     }
-//   });
-
-
-
-//   const APIURL = `https://jsonplaceholder.typicode.com/todos`;
-  
+let page=JSON.parse(localStorage.getItem("both"))||[];
 
     let fetchedData = [];
     fetch(URL)
@@ -81,15 +23,34 @@ let URL = "https://63f78042e40e087c95906c44.mockapi.io/mens";
       .catch((err) => {
         console.log(err);
       });
-
+       
       let selectFilter = document.getElementById("filter")
+  
+      let sortby = document.getElementById("sort");
+
+      sortby.addEventListener("change",()=>{
+        let sortValue=sortby.value;
+        if(sortValue==""){
+          DisplayTable(data);
+        }else{
+          if(sortValue==="ase"){
+          data = `${data}?sortBy=price&order=asc`;
+          DisplayTable(data);
+          }else if(sortValue==="dsc"){
+             data= `${data}?sortBy=price&order=desc`;
+          DisplayTable(data);
+         
+          }
+        }
+      })
+    
+
+
 
     selectFilter.addEventListener("change", () => {
       if (selectFilter.value === "") {
         DisplayTable(fetchedData);
-      }
-      
-      else {
+      }else {
         let filtered = fetchedData.filter((element) => {
           return "" + element.style == selectFilter.value;
         });
@@ -115,9 +76,30 @@ let URL = "https://63f78042e40e087c95906c44.mockapi.io/mens";
         
                 let addcart = document.createElement("button");
                 addcart.innerText="AddCart"
-        
+          
+                addcart.addEventListener("click",function(ele){
+                  if (checkDuplicate(element)) {
+                    alert("Product Already in Cart");
+                  } else {
+                    page.push({ ...element, quantity: 1 });
+                    localStorage.setItem("both", JSON.stringify(page));
+                    alert("Product Added To Cart");
+                  }
+               
+                 })
+           
                
                 div.append(img,type,style,price,addcart);
                 maindiv.append(div);
       });
     }
+    function checkDuplicate(product) {
+      for (let i = 0; i < page.length; i++) {
+        if (page[i].id == product.id) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    

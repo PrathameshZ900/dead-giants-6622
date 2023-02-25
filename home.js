@@ -31,6 +31,7 @@ trenCat.append(img)
 
 let URL ="https://63f5e8a059c944921f68f900.mockapi.io/e-com";
 
+
 fetch(URL)
 .then(function(res){
   return res.json();
@@ -44,6 +45,9 @@ fetch(URL)
   console.log(err);
 
 })
+
+ 
+
 
 let bigDeal=document.getElementById("bigDeal");
 function display(data){
@@ -63,6 +67,8 @@ function display(data){
   })
 
 }
+
+
 
 
 
