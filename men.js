@@ -2,159 +2,104 @@ let left2=document.getElementById("left2");
 
 left2.addEventListener("click",function(){
     location.href="./home.html"
+    // https://63f78042e40e087c95906c44.mockapi.io/women
 })
 
-// let maindiv = document.getElementById("app");
 
-// let URL = "https://63f78042e40e087c95906c44.mockapi.io/mens";
+let maindiv = document.getElementById("app");
 
-
-// fetch(URL)
-//       .then((response) => {
-//         return response.json();
-//       })
-//       .then((data) => {
-//         fetchedData = data;
-//         display(data);
-//         console.log(data)
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-
-// let filter = document.getElementById("filter");
+let URL = "https://63f78042e40e087c95906c44.mockapi.io/women";
 
 
-// filter.addEventListener("change",()=>{
-//   fetch()
-// })
-// function filterdata(data){
-//   let filterValue = filter.value;
-//   if(filterValue===""){
-//     display(data);
-//   }else{
-//     data=data.filter((ele)=>{
-     
-//    return ele.style==filterValue;
+let page=JSON.parse(localStorage.getItem("both"))||[];
 
-//     })
-//     display(data)
-//   }
-// }
-//       function display(data){
-  
-//     data.forEach(element => {
-//        let div = document.createElement("div");
-
-//        let img = document.createElement("img");
-//       img.setAttribute("src",element.img)
-
-//        let style = document.createElement("h3");
-//        style.innerText=element.style;
-
-//        let price = document.createElement("h2");
-//        price.innerText=element.price;
-
-//        let addcart = document.createElement("button");
-//        addcart.innerText="Add To Cart";
-    
-
-//   div.append(img,style,price,addcart)
-//    maindiv.append(div);
-//     });
-
-
-//       }
-
-
-/************************************ */
-
-
-
-async function fetchdata(){
-  try{
-    let api=await fetch("https://63f78042e40e087c95906c44.mockapi.io/women")
-        api=await api.json();
-        console.log(api)
-        filterdata(api)
-        
-  }catch(error){
-    console.log(error)
-  }
-  
-}
-fetchdata();
-
-let filterby=document.getElementById("filter");
-    filterby.addEventListener("change",()=>{
-      fetchdata()
-    })
-function filterdata(data){
-  let filterValue=filterby.value
-    if(filterValue===""){
-      displayproduct(data)
-    }else{
-      data=data.filter((product)=>{
-        return product.style==filterValue
+    let fetchedData = [];
+    fetch(URL)
+      .then((response) => {
+        return response.json();
       })
-      displayproduct(data)
-    }
+      .then((data) => {
+        fetchedData = data;
+        DisplayTable(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-}
+      let selectFilter = document.getElementById("filter")
+
+   
+  
+      let sortby = document.getElementById("sort");
+
+      sortby.addEventListener("change",()=>{
+        let sortValue=sortby.value;
+        if(sortValue==""){
+          DisplayTable(data);
+        }else{
+          if(sortValue==="ase"){
+          data = `${data}?sortBy=price&order=asc`;
+          DisplayTable(data);
+          }else if(sortValue==="dsc"){
+             data= `${data}?sortBy=price&order=desc`;
+          DisplayTable(data);
+         
+          }
+        }
+      })
 
 
-let cont=document.getElementById("app")
-let cartArr=JSON.parse(localStorage.getItem("cart"))||[];
-//dispaly data on browser
-function displayproduct(data){
-  cont.innerHTML=""
-  data.forEach(( product )=>{
-    let card=document.createElement("div");
-    let image=document.createElement("img");
-    let style=document.createElement("h3");
-    let price=document.createElement("h4");
-    let addcard=document.createElement("button");
-
-    addcard.textContent="Add To Card";
-    image.src=product.img;
-    style.textContent=product.style;
-    price.textContent=`Price:- ₹${product.price}`;
-
-    //add to cart
-    addcard.addEventListener("click",()=>{
-      if(checkduplicate(product)){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Already Added Try Another one',
-          footer: '<a href="">Why do I have this issue?</a>'
-        })
-      }else{
-        
-        cartArr.push({...product,quantity:1})
-        localStorage.setItem("cart",JSON.stringify(cartArr))
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Product added to cart',
-          showConfirmButton: false,
-          timer: 0
-        })
-
+    selectFilter.addEventListener("change", () => {
+      if (selectFilter.value === "") {
+        DisplayTable(fetchedData);
+      }else {
+        let filtered = fetchedData.filter((element) => {
+          return "" + element.style == selectFilter.value;
+        });
+        DisplayTable(filtered);
       }
+    });
+    function DisplayTable(data) {
+     maindiv.innerHTML = null;
+      data.forEach((element) => {
+        let div = document.createElement("div");
 
-    })
-
-    card.append(image,style,price,addcard);
-    cont.append(card)
-  })
-}
-
-function checkduplicate(product){
-  for(let i=0;i<cartArr.length;i++){
-    if(cartArr[i].id===product.id){
-      return true;
+                let img = document.createElement("img");
+                img.setAttribute("src",element.img);
+        
+                let type = document.createElement("p");
+                type.innerText="Mens Tshirt black";
+        
+                let style = document.createElement("h5")
+                style.innerText = element.style;
+        
+                let price = document.createElement("h4");
+                price.innerText = `₹${element.price}`;
+        
+                let addcart = document.createElement("button");
+                addcart.innerText="AddCart"
+          
+                addcart.addEventListener("click",function(ele){
+                  if (checkDuplicate(element)) {
+                    alert("Product Already in Cart");
+                  } else {
+                    page.push({ ...element, quantity: 1 });
+                    localStorage.setItem("both", JSON.stringify(page));
+                    alert("Product Added To Cart");
+                  }
+               
+                 })
+           
+               
+                div.append(img,type,style,price,addcart);
+                maindiv.append(div);
+      });
     }
-  }
-  return false;
-  }
+    function checkDuplicate(product) {
+      for (let i = 0; i < page.length; i++) {
+        if (page[i].id == product.id) {
+          return true;
+        }
+      }
+      return false;
+    }
