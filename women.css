@@ -223,7 +223,7 @@ background-color: #fffbfb;
   font-size: 20px;
   background-color: rgb(169, 190, 30);
   color: antiquewhite;
-  margin-top: 20px;
+  margin-top: 200px;
   margin-bottom: 20px;
 }
 #sort{
@@ -236,3 +236,17 @@ background-color: #fffbfb;
   margin-bottom: 20px;
   padding: 5px;
 }
+
+@media screen and (max-width:750px) {
+  #nav2>#right2>#search{
+   
+     display: none;
+  }
+  #nav2{
+    align-items: center;
+  }
+  #app{
+    grid-template-columns: repeat(1,1fr);
+  }
+
+  }

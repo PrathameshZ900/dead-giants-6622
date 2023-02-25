@@ -3,3 +3,18 @@
     padding: 15px;
     border-radius: 20px;
 }
+
+@media screen and (max-width:750px) {
+    #nav2>#right2>#search{
+     
+       display: none;
+    }
+    #nav2{
+      align-items: center;
+    }
+    
+ #sing>a{
+    display: none;
+ }
+
+    }

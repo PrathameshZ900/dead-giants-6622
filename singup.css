@@ -169,3 +169,18 @@
    
     text-decoration: none;
 }
+@media screen and (max-width:750px) {
+    #nav2>#right2>#search{
+     
+       display: none;
+    }
+    #nav2{
+      align-items: center;
+    }
+    
+   #sing{
+    font-size: 10px
+   }
+    
+
+    }
