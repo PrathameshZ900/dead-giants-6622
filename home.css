@@ -209,7 +209,7 @@ justify-content: center;
 #tag{
     width: 100%;
    margin-top: 200px;
-   height: 175px;
+ 
 }
 
 #chor{
@@ -467,3 +467,26 @@ text-align: center;
 
 }
 
+@media screen and (max-width:750px) {
+#nav2>#right2>#search{
+ 
+   display: none;
+}
+#nav2{
+  align-items: center;
+}
+
+#tag{
+  width: 100%;
+}
+#chor{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+}
+#trenCat{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+}
+
+
+}

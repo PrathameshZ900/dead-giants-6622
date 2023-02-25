@@ -221,3 +221,28 @@ border-radius: 20px;
     position: sticky;
     top: 100px;
   }
+
+
+  @media screen and (max-width:750px) {
+    #nav2>#right2>#search{
+     
+       display: none;
+    }
+    #nav2{
+      align-items: center;
+    }
+    
+    #cont{
+      display: grid;
+      grid-template-columns: repeat(1,1fr);
+    
+    }
+ #cont>div{
+  font-size: 30px;
+  width: 70%;
+ }
+ #cont>div>img{
+  width: 80%;
+ }
+    
+    }
